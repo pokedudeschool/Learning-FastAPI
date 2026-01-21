@@ -13,7 +13,7 @@ def create_session(db:Session, user_id: int) -> str:
     return session_id
 
 def get_user_id_from_session(db:Session, session_id:str):
-    session = db.query(SessionModel).filter(SessionModel.sessions_id == session_id).first()
+    session = db.query(SessionModel).filter(SessionModel.session_id == session_id).first()
     if session:
         return session.user_id
     return None
@@ -21,7 +21,7 @@ def get_user_id_from_session(db:Session, session_id:str):
 def  get_current_user(
         session_id: str = Cookie(None),
         db: Session = Depends(get_db)
-):
+    ):
     if session_id is None:
         raise HTTPException(status_code=401, detail="Not logged in")
     
